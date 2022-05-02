@@ -3,7 +3,7 @@ from os import environ
 
 from scrapy.exceptions import CloseSpider
 from scrapy.http import Request
-from scrapy_tasks.base_spiders import FinancialStatementCrawlSpider  # noqa F401
+from scrapy_tasks.base_spiders import FinancialStatementCrawlSpider
 from scrapy_tasks.items import FinancialStatementItem  # noqa F401
 
 sys.path.insert(0, f"{environ['AIRFLOW_HOME']}/plugins/")
@@ -24,6 +24,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         url = f"https://stockanalysis.com/stocks/{symbol.lower()}/financials/"
         if statement_type:
             url += statement_type + "/"
+        url += "quarterly/"
         return url
 
     def start_requests(self):

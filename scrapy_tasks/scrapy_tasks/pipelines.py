@@ -3,11 +3,9 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-from utils.db_tools import insert_financial_statement_item  # noqa F402
-from utils.db_tools import (
-    update_statement_type_availability,
-    update_ticker_status,
-)  # noqa
+from utils.db_tools import insert_financial_statement_item
+from utils.db_tools import (update_statement_type_availability,
+                            update_ticker_status)
 
 
 class FinancialStatementPipeline:
@@ -18,5 +16,8 @@ class FinancialStatementPipeline:
             update_statement_type_availability(
                 item["metadata"]["statement_type"], item["metadata"]["symbol"]
             )
-            update_ticker_status(item["metadata"]["symbol"])
+            update_ticker_status(
+                item["metadata"]["symbol"],
+                str(item["metadata"]["latest_statement_date"]),
+            )
         return item

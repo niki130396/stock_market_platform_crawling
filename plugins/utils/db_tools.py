@@ -45,8 +45,12 @@ def get_next_unfetched_ticker():
         )
 
 
-def update_ticker_status(symbol):
-    SQL = get_from_sql("query_statements/update_ticker_is_available.sql", symbol=symbol)
+def update_ticker_status(symbol, latest_statement_date):
+    SQL = get_from_sql(
+        "query_statements/update_ticker_is_available.sql",
+        symbol=symbol,
+        latest_statement_date=latest_statement_date,
+    )
     cursor.execute(SQL)
 
 

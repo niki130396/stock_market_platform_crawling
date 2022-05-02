@@ -1,6 +1,7 @@
 import sys
 from os import environ
 
+from dateutil.parser import parse
 from scrapy.exceptions import CloseSpider
 from scrapy.http import Request
 from scrapy_tasks.base_spiders import FinancialStatementCrawlSpider
@@ -58,11 +59,12 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         item = FinancialStatementItem()
         item["metadata"] = response.meta.get("document").__dict__
         item["metadata"]["statement_type"] = local_statement_type
+        item["metadata"]["latest_statement_date"] = max(rows[0])
         item["data"] = rows_to_insert
         yield item
 
     def get_rows(self, response, statement_type):
-        years = self.get_years(response)
+        years = self.get_dates(response)
         parsed_rows = [years]
         table = response.xpath("//tbody//tr")
 
@@ -91,7 +93,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         return parsed_rows
 
     @staticmethod
-    def get_years(response):
+    def get_dates(response):
         output = []
         years = response.xpath("//thead//th")
         if years:
@@ -103,7 +105,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
             for element in years[1:]:
                 value = element.xpath("./text()[1]").get()
                 if value:
-                    output.append(parse_numeric_string(value))
+                    output.append(parse(value))
         return output
 
     def arrange_rows_for_insertion(self, rows, document):

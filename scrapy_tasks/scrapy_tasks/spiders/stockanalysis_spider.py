@@ -2,6 +2,7 @@ import sys
 from os import environ
 
 from dateutil.parser import parse
+from dateutil.parser import ParserError
 from scrapy.exceptions import CloseSpider
 from scrapy.http import Request
 from scrapy_tasks.base_spiders import FinancialStatementCrawlSpider
@@ -105,7 +106,10 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
             for element in years[1:]:
                 value = element.xpath("./text()[1]").get()
                 if value:
-                    output.append(parse(value))
+                    try:
+                        output.append(parse(value))
+                    except ParserError:
+                        continue
         return output
 
     def arrange_rows_for_insertion(self, rows, document):

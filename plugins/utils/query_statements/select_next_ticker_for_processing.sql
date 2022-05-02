@@ -7,7 +7,10 @@ FROM (SELECT s.*,
                 ELSE 1
              END AS numeric_is_attempted
       FROM (
-        SELECT * FROM "public".financial_statements_statementsmetadata sub_meta
+        SELECT * FROM
+            (SELECT * FROM "public".financial_statements_statementsmetadata renew_statements
+                WHERE renew_statements.latest_statement_date IS NULL
+                OR CURRENT_DATE - renew_statements.latest_statement_date > 90) sub_meta
         WHERE sub_meta.is_available = false
         AND sub_meta.is_processed = false
         ) s

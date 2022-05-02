@@ -60,6 +60,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         item = FinancialStatementItem()
         item["metadata"] = response.meta.get("document").__dict__
         item["metadata"]["statement_type"] = local_statement_type
+        print(rows[0])
         item["metadata"]["latest_statement_date"] = max(rows[0])
         item["data"] = rows_to_insert
         yield item

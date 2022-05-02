@@ -1,7 +1,7 @@
 import sys
 from os import environ
 
-from dateutil.parser import parse
+from datetime import datetime
 from dateutil.parser import ParserError
 from scrapy.exceptions import CloseSpider
 from scrapy.http import Request
@@ -60,7 +60,6 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         item = FinancialStatementItem()
         item["metadata"] = response.meta.get("document").__dict__
         item["metadata"]["statement_type"] = local_statement_type
-        self.logger.info(rows[0])
         item["metadata"]["latest_statement_date"] = max(rows[0])
         item["data"] = rows_to_insert
         yield item
@@ -108,7 +107,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
                 value = element.xpath("./text()[1]").get()
                 if value:
                     try:
-                        output.append(parse(value))
+                        output.append(datetime.strptime(value, "%Y-%m-%d"))
                     except ParserError:
                         continue
         return output

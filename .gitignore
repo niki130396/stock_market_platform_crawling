@@ -330,4 +330,3 @@ tags
 /mongo-volume
 bin
 .idea
-plugins/utils/query_statements

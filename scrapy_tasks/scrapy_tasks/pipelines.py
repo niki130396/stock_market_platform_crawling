@@ -18,6 +18,6 @@ class FinancialStatementPipeline:
             )
             update_ticker_status(
                 item["metadata"]["symbol"],
-                str(item["metadata"]["latest_statement_date"]),
+                item["metadata"]["latest_statement_date"],
             )
         return item

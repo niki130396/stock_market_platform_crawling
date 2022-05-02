@@ -7,6 +7,6 @@ SET is_available =
             THEN true
         ELSE false
     END,
-    is_processed = false
+    is_processed = false,
     latest_statement_date = '{{ latest_statement_date }}'
 WHERE meta.symbol = '{{ symbol }}';

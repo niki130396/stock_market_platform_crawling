@@ -106,7 +106,8 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
                 value = element.xpath("./text()[1]").get()
                 if value:
                     try:
-                        output.append(datetime.strptime(value, "%Y-%m-%d"))
+                        datetime.strptime(value, "%Y-%m-%d")
+                        output.append(value)
                     except ValueError:
                         continue
         return output

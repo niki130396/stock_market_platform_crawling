@@ -25,12 +25,12 @@ x-airflow-common:
     - ./scrapy_tasks:/opt/airflow/scrapy_tasks
   user: "${AIRFLOW_UID:-50000}:${AIRFLOW_GID:-50000}"
   depends_on:
-    - redis
-    - postgres
+    - redis_crawling
+    - postgres_crawling
 
 services:
 
-  postgres:
+  postgres_crawling:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
@@ -46,7 +46,7 @@ services:
     restart: always
     hostname: postgres_crawling
 
-  redis:
+  redis_crawling:
     image: redis:5.0
     container_name: redis_crawling
     ports:

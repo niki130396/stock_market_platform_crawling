@@ -48,7 +48,7 @@ services:
     restart: always
     hostname: postgres_crawling
     networks:
-      -airflow-network
+      - airflow-network
 
   redis:
     image: redis:5.0

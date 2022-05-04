@@ -1,6 +1,6 @@
 # PostgreSQL
 # ------------------------------------------------------------------------------
-POSTGRES_HOST=192.168.112.2
+POSTGRES_HOST=postgres_api
 POSTGRES_PORT=5432
 POSTGRES_DB=stock_market_platform
 POSTGRES_USER=vYFyCTEJOyYWibhYuVxlnvezFuDHwGXI

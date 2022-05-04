@@ -14,7 +14,7 @@ x-airflow-common:
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://vYFyCTEJOyYWibhYuVxlnvezFuDHwGXI:tD8Fpalp5GviRKn8zbBc0GdCIRWxynoqChkm4NaEG7g42lJgypqC1Iw8X7l6zAv5@postgres_crawling/stock_market_platform
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://vYFyCTEJOyYWibhYuVxlnvezFuDHwGXI:tD8Fpalp5GviRKn8zbBc0GdCIRWxynoqChkm4NaEG7g42lJgypqC1Iw8X7l6zAv5@postgres_crawling/stock_market_platform
-    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+    AIRFLOW__CELERY__BROKER_URL: redis://:@redis_crawling:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
@@ -52,6 +52,7 @@ services:
     ports:
       - "6380:6379"
     restart: always
+    hostname: redis_crawling
 
   airflow-webserver:
     <<: *airflow-common

@@ -47,6 +47,8 @@ services:
     - "5433:5432"
     restart: always
     hostname: postgres_crawling
+    networks:
+      -airflow-network
 
   redis:
     image: redis:5.0
@@ -55,6 +57,8 @@ services:
       - "6380:6379"
     restart: always
     hostname: redis_crawling
+    networks:
+      - airflow-network
 
   airflow-webserver:
     <<: *airflow-common

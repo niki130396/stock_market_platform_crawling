@@ -1,10 +1,8 @@
 version: '3'
 
 volumes:
-  stock_market_local_postgres_data:
-    external: true
-  stock_market_local_postgres_data_backups:
-    external: true
+  local_postgres_crawling_data: {}
+  local_postgres_crawling_data_backups: {}
 
 x-airflow-common:
   &airflow-common
@@ -37,7 +35,7 @@ services:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
     image: stock_market_platform_production_postgres
-    container_name: stock_market_tasks_postgres
+    container_name: postgres_crawling
     volumes:
       - stock_market_local_postgres_data:/var/lib/postgresql/data:Z
       - stock_market_local_postgres_data_backups:/backups:z
@@ -49,7 +47,7 @@ services:
 
   redis:
     image: redis:5.0
-    container_name: stock_market_tasks_redis
+    container_name: redis_crawling
     ports:
       - "6379:6379"
     restart: always

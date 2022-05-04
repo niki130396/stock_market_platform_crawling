@@ -37,8 +37,8 @@ services:
     image: stock_market_platform_production_postgres
     container_name: postgres_crawling
     volumes:
-      - stock_market_local_postgres_data:/var/lib/postgresql/data:Z
-      - stock_market_local_postgres_data_backups:/backups:z
+      - local_postgres_crawling_data:/var/lib/postgresql/data:Z
+      - local_postgres_crawling_data_backups:/backups:z
     env_file:
       - ./.envs/.local/.postgres
     ports:

@@ -1,10 +1,6 @@
-import sys
-from os import environ
-
 from scrapy.spiders import CrawlSpider
 
-sys.path.insert(0, f"{environ['AIRFLOW_HOME']}/plugins/")
-from utils.db_tools import NormalizedFieldsProcessor  # noqa E402
+from plugins.utils.db_tools import NormalizedFieldsProcessor
 
 
 class FinancialStatementCrawlSpider(CrawlSpider):

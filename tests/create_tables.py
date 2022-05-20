@@ -1,5 +1,6 @@
 from plugins.utils.db_tools import get_from_sql
 from plugins.db_connectors import get_db_connection
+from psycopg2.extras import execute_values
 from os import listdir
 
 connection = get_db_connection()
@@ -35,7 +36,7 @@ def get_field_names(file_name: str):
 
 def create_table(file_name, data):
     table_name = get_table_name(file_name)
-    cursor.execute(f"""DROP TABLE IF EXISTS {table_name}""")
+    cursor.execute(f"""DROP TABLE IF EXISTS {table_name} CASCADE""")
     connection.commit()
     create_sql = get_from_sql(
         file_name,
@@ -50,5 +51,5 @@ def create_table(file_name, data):
         fields=get_field_names(file_name),
         row_values=", ".join(["?" for _ in range(len(data[0]))])
     )
-    cursor.executemany(insert_sql, data)
+    execute_values(cursor, insert_sql, data)
     connection.commit()

@@ -69,7 +69,7 @@ def get_unfetched_objects():
     for row in cursor.fetchall():
         output.append(
             DocumentModel(
-                id=row[0], symbol=row[1], name=row[2], sector=row[7], industry=row[8]
+                id=row[0], symbol=row[1], name=row[2], sector=row[7], industry=row[8], latest_statement_date=row[15]
             )
         )
     return output

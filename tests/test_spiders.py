@@ -1,6 +1,7 @@
 from plugins.utils.db_tools import NormalizedFieldsProcessor, get_next_unfetched_ticker
 from tests.definitions import DUMMY_DATA
 from plugins.utils.common import remove_rows_prior_to_latest
+from datetime import datetime
 
 
 def arrange_rows_for_insertion(rows, document, normalized_field_processor):
@@ -39,6 +40,8 @@ def test_remove_rows_prior_to_latest(document_dataclass):
 
 
 def test_get_next_unfetched_ticker():
+    document = next(get_next_unfetched_ticker())
 
-    for obj in get_next_unfetched_ticker():
-        print(obj.latest_statement_date)
+    now = datetime.now().date()
+    assert (now - document.latest_statement_date).days >= 90
+

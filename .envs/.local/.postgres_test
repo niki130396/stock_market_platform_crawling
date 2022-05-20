@@ -1,0 +1,5 @@
+POSTGRES_HOST=postgres_crawling_test
+POSTGRES_PORT=5432
+POSTGRES_DB=stock_market_platform_test
+POSTGRES_USER=vYFyCTEJOyYWibhYuVxlnvezFuDHwGXI
+POSTGRES_PASSWORD=tD8Fpalp5GviRKn8zbBc0GdCIRWxynoqChkm4NaEG7g42lJgypqC1Iw8X7l6zAv5

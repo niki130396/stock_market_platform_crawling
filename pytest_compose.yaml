@@ -1,0 +1,13 @@
+version: '3'
+
+
+services:
+  pytest:
+    build:
+      context: .
+      dockerfile: compose/local/pytest/Dockerfile
+    environment:
+      IS_TEST_ENVIRONMENT: 'true'
+    volumes:
+      - ./plugins:/app/plugins
+      - ./tests:/app/tests

@@ -4,27 +4,23 @@ from collections import defaultdict
 import psycopg2
 from jinja2 import Template
 from psycopg2.extras import execute_values
-from utils.models import DocumentModel
+from plugins.utils.models import DocumentModel
+from plugins.db_connectors import get_db_connection
 
-connection_kwargs = {
-    "user": os.environ.get("POSTGRES_USER"),
-    "password": os.environ.get("POSTGRES_PASSWORD"),
-    "host": os.environ.get("POSTGRES_HOST"),
-    "port": os.environ.get("POSTGRES_PORT"),
-    "database": os.environ.get("POSTGRES_DB"),
-}
 
-connection = psycopg2.connect(**connection_kwargs)
-connection.set_session(autocommit=True)
+connection = get_db_connection()
 cursor = connection.cursor()
 
 
-def get_from_sql(rel_file_path: str, **kwargs):
-    name, extension = rel_file_path.split(".")
+def get_from_sql(file_name: str, path=None, **kwargs):
+    name, extension = file_name.split(".")
     if extension != "sql":
         raise ValueError("Only .sql extension files supported")
-    current_file_path = os.path.dirname(__file__)
-    abs_file_path = os.path.join(current_file_path, rel_file_path)
+    if not path:
+        current_file_path = os.path.dirname(__file__)
+        abs_file_path = os.path.join(current_file_path, file_name)
+    else:
+        abs_file_path = os.path.join(path, file_name)
     with open(abs_file_path, "r") as sql_file:
         SQL = Template(sql_file.read()).render(**kwargs)
         return SQL
@@ -41,7 +37,12 @@ def get_next_unfetched_ticker():
         cursor.execute(SQL)
         row = cursor.fetchone()
         yield DocumentModel(
-            id=row[0], symbol=row[1], name=row[2], sector=row[7], industry=row[8]
+            id=row[0],
+            symbol=row[1],
+            name=row[2],
+            sector=row[7],
+            industry=row[8],
+            latest_statement_date=row[15]
         )
 
 

@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 
 
 class FinancialStatementDefinition:
@@ -40,3 +41,4 @@ class DocumentModel:
     name: str
     sector: str
     industry: str
+    latest_statement_date: datetime

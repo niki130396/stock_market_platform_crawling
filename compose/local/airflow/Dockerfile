@@ -12,5 +12,5 @@ RUN pip install -r /requirements/airflow_requirements.txt
 RUN pip uninstall  --yes azure-storage \
     && pip install -U azure-storage-blob apache-airflow-providers-microsoft-azure==1.1.0
 
-ENV PYTHONPATH "${PYTHONPATH}:/opt/airflow/"
+ENV PYTHONPATH "${PYTHONPATH}:/opt/airflow"
 ENTRYPOINT ["/entrypoint"]

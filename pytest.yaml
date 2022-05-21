@@ -11,6 +11,7 @@ services:
     volumes:
       - ./plugins:/app/plugins
       - ./tests:/app/tests
+      - ./scrapy_tasks:/app/scrapy_tasks
     depends_on:
       - postgres
 

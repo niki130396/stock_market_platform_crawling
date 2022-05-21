@@ -12,6 +12,7 @@ from tests.definitions import (
         NORMALIZED_FIELDS,
 )
 from plugins.utils.models import DocumentModel
+from plugins.utils.db_tools import NormalizedFieldsProcessor
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -39,3 +40,13 @@ def document_dataclass():
             industry=COMPANY[0][8],
             latest_statement_date=COMPANY[0][15]
         )
+
+
+@pytest.fixture
+def dummy_stock_analysis_spider():
+    class Spider:
+        def __init__(self):
+            self.normalized_field_processor = NormalizedFieldsProcessor("stock_analysis")
+
+    obj = Spider()
+    return obj

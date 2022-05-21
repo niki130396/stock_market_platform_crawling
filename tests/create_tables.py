@@ -49,7 +49,6 @@ def create_table(file_name, data):
         path="/app/tests/queries",
         table_name=table_name,
         fields=get_field_names(file_name),
-        row_values=", ".join(["?" for _ in range(len(data[0]))])
     )
     execute_values(cursor, insert_sql, data)
     connection.commit()

@@ -1,8 +1,9 @@
 from datetime import datetime
 from scrapy.exceptions import CloseSpider
 from scrapy.http import Request
-from scrapy_tasks.base_spiders import FinancialStatementCrawlSpider  # noqa F401
-from scrapy_tasks.items import FinancialStatementItem  # noqa F401
+
+from scrapy_tasks.scrapy_tasks.base_spiders import FinancialStatementCrawlSpider  # noqa F401
+from scrapy_tasks.scrapy_tasks.items import FinancialStatementItem  # noqa F401
 
 from plugins.utils.common import (
     parse_numeric_string,

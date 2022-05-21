@@ -10,8 +10,8 @@ from os import environ
 
 BOT_NAME = "scrapy_tasks"
 
-SPIDER_MODULES = ["scrapy_tasks.spiders"]
-NEWSPIDER_MODULE = "scrapy_tasks.spiders"
+SPIDER_MODULES = ["scrapy_tasks.scrapy_tasks.spiders"]
+NEWSPIDER_MODULE = "scrapy_tasks.scrapy_tasks.spiders"
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -64,7 +64,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "scrapy_tasks.pipelines.FinancialStatementPipeline": 300,
+    "scrapy_tasks.scrapy_tasks.pipelines.FinancialStatementPipeline": 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

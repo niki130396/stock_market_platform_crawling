@@ -17,6 +17,7 @@ with DAG(
     crawl_stock_analysis_dot_com = BashOperator(
         task_id="crawl",
         bash_command="cd ${AIRFLOW_HOME}/scrapy_tasks &&"
+        " export PYTHONPATH=/opt/airflow &&"
         " scrapy crawl stock_analysis_spider",
     )
 

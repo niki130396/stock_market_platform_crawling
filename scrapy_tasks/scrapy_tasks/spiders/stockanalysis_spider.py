@@ -58,7 +58,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         header = self.get_dates(response)
         table_data.append(header)
         rows = self.get_rows(response, local_statement_type)
-        table_data.append(rows)
+        table_data.extend(rows)
         rows_to_insert = self.arrange_rows_for_insertion(table_data, document)
         latest_rows = remove_rows_prior_to_latest(rows_to_insert, document.latest_statement_date)
 

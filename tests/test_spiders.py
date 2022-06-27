@@ -56,6 +56,7 @@ def test_html_fetch_table(document_dataclass, dummy_stock_analysis_spider):
                             )
     rows = StockAnalysisSpider.get_rows(dummy_stock_analysis_spider, response, "income_statement")
     dates = StockAnalysisSpider.get_dates(response)
-
     assert dates[0] == "2022-06-30" and dates[-1] == "2012-09-30"
     assert rows[0][0] == "total_revenue" and rows[0][-1] == 1723
+    for item in rows[1][1:]:
+        assert type(item) == int

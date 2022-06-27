@@ -9,6 +9,7 @@ from plugins.utils.common import (
     parse_numeric_string,
     convert_to_normalized_quarter,
     remove_rows_prior_to_latest,
+    is_numeric_value
 )
 from plugins.utils.db_tools import get_next_unfetched_ticker
 
@@ -88,7 +89,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
                 row_values.append(normalized_row_name)
                 for el in elements[1:]:
                     value = el.xpath("./text()[1]").get()
-                    if value:
+                    if value and is_numeric_value(value):
                         row_values.append(parse_numeric_string(value))
 
                 while isinstance(row_values[-1], str):

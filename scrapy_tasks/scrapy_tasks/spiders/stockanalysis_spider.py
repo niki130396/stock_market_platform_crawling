@@ -54,8 +54,12 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         document = response.meta.get("document")
         local_statement_type = response.meta.get("statement_type")
 
+        table_data = []
+        header = self.get_dates(response)
+        table_data.append(header)
         rows = self.get_rows(response, local_statement_type)
-        rows_to_insert = self.arrange_rows_for_insertion(rows, document)
+        table_data.append(rows)
+        rows_to_insert = self.arrange_rows_for_insertion(table_data, document)
         latest_rows = remove_rows_prior_to_latest(rows_to_insert, document.latest_statement_date)
 
         item = FinancialStatementItem()
@@ -66,8 +70,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         yield item
 
     def get_rows(self, response, statement_type):
-        years = self.get_dates(response)
-        parsed_rows = [years]
+        parsed_rows = []
         table = response.xpath("//tbody//tr")
 
         if table:
@@ -84,7 +87,7 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
 
                 row_values.append(normalized_row_name)
                 for el in elements[1:]:
-                    value = el.xpath(".//span/text()[1]").get()
+                    value = el.xpath("./text()[1]").get()
                     if value:
                         row_values.append(parse_numeric_string(value))
 
@@ -117,7 +120,6 @@ class StockAnalysisSpider(FinancialStatementCrawlSpider):
         return output
 
     def arrange_rows_for_insertion(self, rows, document):
-        #  TODO don't keep null values. Just don't write anything in the database instead of keeping a null value.
         output = []
         for i in range(1, len(rows[0])):
             period = rows[0][i]
